@@ -2,14 +2,19 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 import { SquaresPlusIcon, BugAntIcon, BoltIcon, ChatBubbleLeftIcon, Cog8ToothIcon, ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline"
 
 export default function Nav() {
   const [page, setPage] = useState("Overview")
+  const router = useRouter()
 
   const handleLogout = () => {
     setPage("Overview")
+    router.push("/signup")
+    signOut({callbackUrl: '/signup'})
   }
   
 

@@ -5,7 +5,7 @@ import { useState } from "react"
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from "@heroicons/react/24/solid"
-import Ticket from "@/app/components/Ticket"
+import Ticket from '../../components/Ticket'
 
 export default function Projects () {
   const [showForm, setShowForm] = useState(false)
