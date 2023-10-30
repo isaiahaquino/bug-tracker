@@ -13,8 +13,8 @@ export default function Nav() {
 
   const handleLogout = () => {
     setPage("Overview")
-    router.push("/signup")
-    signOut({callbackUrl: '/signup'})
+    // router.push("/")
+    signOut({callbackUrl: '/auth'})
   }
   
 

@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt"
 import prisma from "../../../../prisma/client";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -28,16 +28,12 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
-      if (user) {
-        token.id = user.id
-      }
-      console.log("Token: ", token)
+    async jwt({ token, user }) {
+      if (user) { token.id = user.id }
       return token
     },
     async session({ session, token }) {
       session.user.id = token.id
-      console.log("Session: ", session)
       return session
     },
     async redirect({ url, baseUrl }) {
@@ -45,7 +41,14 @@ const handler = NextAuth({
       else if (new URL(url).origin === baseUrl) return url
       return `${baseUrl}/dashboard`
     }
-  }
-})
+  },
+  pages: {
+    signIn: "/auth",
+    signOut: "/auth",
+    newUser: "/auth",
+  },
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
