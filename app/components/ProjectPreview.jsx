@@ -1,6 +1,7 @@
 
 
 import { EllipsisHorizontalIcon, BugAntIcon } from "@heroicons/react/24/solid"
+import Link from "next/link"
 
 export default function ProjectPreview(props) {
   const project = props.project
@@ -9,7 +10,7 @@ export default function ProjectPreview(props) {
     <div className="bg-white rounded-md p-4 flex justify-between">
       <div className="flex flex-col gap-4">
         <div className="flex gap-10">
-          <h1 className="text-xl font-medium">{project.title}</h1>
+          <Link className="text-xl font-medium" href={`/dashboard/projects/${project.id}`}>{project.title}</Link>
           <div className="flex gap-4">
             <div className="flex items-center gap-2 bg-yellow-400 rounded-md py-1 px-2 text-white">
               <BugAntIcon className="h-5"/>

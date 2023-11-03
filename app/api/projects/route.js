@@ -1,7 +1,13 @@
 import prisma from "../../../prisma/client"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../auth/[...nextauth]/route"
 
 export async function GET(req, res) {
   try {
+    const session = await getServerSession(authOptions)
+  
+    if (!session) return new Response("Protected content.", { status: 401 })
+    
     const result = await prisma.project.findMany()
     
     return Response.json(result)
@@ -12,12 +18,14 @@ export async function GET(req, res) {
 
 export async function POST(req, res) {
   const { title, desc } = await req.json()
-
+  
   try {
+    const session = await getServerSession(authOptions)
+
+    if (!session) return new Response("Protected content.", { status: 401 })
+    
     const result = await prisma.project.create({
-      data: {
-        title, desc
-      },
+      data: { title, desc }
     })
 
     return Response.json(result)

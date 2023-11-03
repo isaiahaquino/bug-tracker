@@ -25,7 +25,6 @@ export default function Projects() {
     }
     getProjects()
       .then(data => setProjects(data))
-    console.log(projects[1])
   }, [showForm])
 
   const changeMode = () => {
@@ -39,6 +38,7 @@ export default function Projects() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
     const postProject = async () => {
       const resp = await fetch("/api/projects", {
         method: "POST",
@@ -46,8 +46,8 @@ export default function Projects() {
       })
       return resp.json()
     }
+
     postProject()
-      .then(data => console.log(data))
     changeMode()
   }
 
@@ -60,7 +60,7 @@ export default function Projects() {
 
       <div className="flex flex-col bg-gray-100 rounded-md p-4 gap-4">
         {projects.map((project) => {
-            return <ProjectPreview project={project} />
+            return <ProjectPreview project={project} key={project.id} />
         })}
       </div>
 
@@ -69,9 +69,9 @@ export default function Projects() {
             <form className="flex flex-col px-10 pt-10 pb-20 w-[500px]" onSubmit={handleSubmit}>
               <h1 className="text-2xl font-semibold mb-4">Create A New Project</h1>
               <label htmlFor="title" className="mb-2">Title:</label>
-              <input className="p-2 border-[1px] border-gray-300 mb-6" type="text" name="title" id="title" value={formData.title} onChange={handleChange}/>
+              <input className="p-2 border-[1px] border-gray-300 mb-6" type="text" name="title" id="title" value={formData.title} onChange={handleChange} required/>
               <label htmlFor="desc" className="mb-2">Description:</label>
-              <textarea className="p-2 border-[1px] border-gray-300 mb-6" name="desc" id="desc" rows={5} value={formData.desc} onChange={handleChange} />
+              <textarea className="p-2 border-[1px] border-gray-300 mb-6" name="desc" id="desc" rows={5} value={formData.desc} onChange={handleChange} required/>
               <div className="mt-8 flex self-end gap-4">
                 <button className="px-6 py-2 border-[1px] rounded-sm" type="cancel" onClick={changeMode}>Cancel</button>
                 <button className="px-6 py-2 bg-black text-white rounded-sm" type="submit">Submit</button>

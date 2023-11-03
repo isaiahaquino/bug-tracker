@@ -36,16 +36,18 @@ model Bug {
   comments  Comment[]
   progress  String
   severity  Int
-  author    User?     @relation(fields:[bugId], references: [id])
-  project   Project?  @relation(fields:[bugId], references: [id])
-  bugId     String?   @db.ObjectId
+  author    User      @relation(fields:[authorId], references: [id])
+  authorId  String    @db.ObjectId
+  project   Project   @relation(fields:[projectId], references: [id])
+  projectId String    @db.ObjectId
 }
 
 model Comment {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime  @default(now())
   content   String
-  author    User?     @relation(fields:[commentId], references: [id])
-  bug       Bug?      @relation(fields:[commentId], references: [id])
-  commentId String?   @db.ObjectId
+  author    User      @relation(fields:[authorId], references: [id])
+  authorId  String    @db.ObjectId
+  bug       Bug       @relation(fields:[bugId], references: [id])
+  bugId     String    @db.ObjectId
 }
