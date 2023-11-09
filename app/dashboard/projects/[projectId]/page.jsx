@@ -27,16 +27,6 @@ export default function Projects () {
       })
   }, [])
 
-  const sampleTicket = {
-    title: "Spelling Mistake",
-    description: "I still see there are many spelling mistakes all around the blog page.",
-    category: "UXDesign",
-    createdAt: new Date(),
-    creator: "Isaiah Aquino",
-    comments: ["Working on it.", "Any known mistakes that you can see?", "Need review."],
-    progress: "R",
-  }
-
   const changeMode = () => {
     setMode(mode => !mode)
     setFormData({ ...formData, title: "", desc: "", category: "", progress: "", severity: 1 })
@@ -145,19 +135,19 @@ export default function Projects () {
                 <legend className="mb-2">Progress:</legend>
                 <div className="flex gap-8">
                   <p className="gap-1 flex">
-                    <input type="radio" name="progress" id="progress1" value="T" onClick={handleChange} required/>
+                    <input type="radio" name="progress" id="progress1" value="To Do" onClick={handleChange} required/>
                     <label htmlFor="progress1">To Do</label>
                   </p>
                   <p className="gap-1 flex">
-                    <input type="radio" name="progress" id="progress2" value="P" onClick={handleChange}/>
+                    <input type="radio" name="progress" id="progress2" value="In Progress" onClick={handleChange}/>
                     <label htmlFor="progress2">In Progress</label>
                   </p>
                   <p className="gap-1 flex">
-                    <input type="radio" name="progress" id="progress3" value="R" onClick={handleChange}/>
+                    <input type="radio" name="progress" id="progress3" value="In Review" onClick={handleChange}/>
                     <label htmlFor="progress3">In Review</label>
                   </p>
                   <p className="gap-1 flex">
-                    <input type="radio" name="progress" id="progress4" value="D" onClick={handleChange}/>
+                    <input type="radio" name="progress" id="progress4" value="Done" onClick={handleChange}/>
                     <label htmlFor="progress4">Done</label>
                   </p>
                 </div>

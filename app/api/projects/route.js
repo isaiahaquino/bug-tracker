@@ -8,7 +8,15 @@ export async function GET(req, res) {
   
     if (!session) return new Response("Protected content.", { status: 401 })
     
-    const result = await prisma.project.findMany()
+    const result = await prisma.project.findMany({
+      include: {
+        bugs: {
+          select: {
+            severity: true
+          }
+        }
+      }
+    })
     
     return Response.json(result)
   } catch (error) {

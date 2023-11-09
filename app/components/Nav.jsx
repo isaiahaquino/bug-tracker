@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react"
 import { useRouter, usePathname } from "next/navigation"
 
 import { SquaresPlusIcon, BugAntIcon, BoltIcon, ChatBubbleLeftIcon, Cog8ToothIcon, ArrowRightOnRectangleIcon, DocumentIcon } from "@heroicons/react/24/outline"
-import { ChevronDownIcon, SquaresPlusIcon as SquaresPlusIconSolid, BugAntIcon as BugAntIconSolid, BoltIcon as BoltIconSolid, ChatBubbleLeftIcon as ChatBubbleLeftIconSolid, Cog8ToothIcon as Cog8ToothIconSolid } from "@heroicons/react/24/solid"
+import { ChevronDoubleDownIcon, ChevronRightIcon, SquaresPlusIcon as SquaresPlusIconSolid, BugAntIcon as BugAntIconSolid, BoltIcon as BoltIconSolid, ChatBubbleLeftIcon as ChatBubbleLeftIconSolid, Cog8ToothIcon as Cog8ToothIconSolid } from "@heroicons/react/24/solid"
 
 export default function Nav() {
   const router = useRouter()
@@ -26,12 +26,12 @@ export default function Nav() {
   }  
 
   return (
-    <div className="w-[300px] h-screen border-r-2 relative">
-      <div className="text-center py-16 text-4xl text-teal-400">
+    <div className="w-[300px] h-screen relative border-r-2">
+      <div className="text-center pt-14 pb-10 text-4xl text-teal-400">
         bug splat
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col py-6">
         <ul className="text-xl text-gray-500">
           <li className={`pl-10 py-4 ${pathname == "/dashboard" && 'bg-slate-100 text-black'}`}>
             <Link href="/dashboard" className="flex gap-4" onClick={() => setPage("Overview")}>
@@ -45,7 +45,7 @@ export default function Nav() {
                 { pathname.split("/")[2] == "projects" ? <BoltIconSolid className="w-8 align-middle" /> : <BoltIcon className="w-8 align-middle" />}
                 Projects
               </Link>
-              { pathname.split("/")[2] == "projects" && <ChevronDownIcon className="h-5"/> }
+              { pathname.split("/")[2] == "projects" && <ChevronDoubleDownIcon className="h-5"/> }
             </div>
             { pathname.split("/")[2] == "projects" && (
               <div className="border-l-[3px] border-gray-300 ml-3 mt-2">
@@ -60,13 +60,13 @@ export default function Nav() {
               </div>
             )}
           </li>
-          <li className={`pl-10 py-4 ${pathname == "/dashboard/reports" && 'bg-slate-100 text-black'}`}>
+          <li className={`pl-10 py-4 ${pathname.split("/")[2] == "reports" && 'bg-slate-100 text-black'}`}>
             <Link href="/dashboard/reports" className="flex gap-4" onClick={() => setPage("Reports")}>
               { pathname.split("/")[2] == "reports" ? <BugAntIconSolid className="w-8 align-middle" /> : <BugAntIcon className="w-8 align-middle" /> }
               Reports
             </Link>
           </li>
-          <li className={`pl-10 py-4 ${pathname == "/dashboard/messages" && 'bg-slate-100 text-black'}`}>
+          {/* <li className={`pl-10 py-4 ${pathname == "/dashboard/messages" && 'bg-slate-100 text-black'}`}>
             <Link href="/dashboard/messages" className="flex gap-4" onClick={() => setPage("Messages")}>
               { pathname.split("/")[2] == "messages" ? <ChatBubbleLeftIconSolid className="w-8 align-middle" /> : <ChatBubbleLeftIcon className="w-8 align-middle" /> }
               Messages
@@ -77,12 +77,12 @@ export default function Nav() {
               { pathname.split("/")[2] == "settings" ? <Cog8ToothIconSolid className="w-8 align-middle" /> : <Cog8ToothIcon className="w-8 align-middle" /> }
               Settings
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
 
       <div className="text-xl text-gray-500 absolute bottom-0 w-full">
-        <button className="pl-10 py-4 mb-14 flex gap-4 w-full"  onClick={handleLogout}>
+        <button className="pl-10 py-10 mb-4 flex gap-4 w-full"  onClick={handleLogout}>
         <ArrowRightOnRectangleIcon className="w-8 align-middle" />
           Logout
         </button>

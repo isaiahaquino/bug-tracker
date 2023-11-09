@@ -12,10 +12,10 @@ export async function GET(req, { params }) {
       where: { id }
     })
 
-    const todo = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "T" }] }, include: { author: true } })
-    const inProg = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "P" }] }, include: { author: true } })
-    const inRev = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "R" }] }, include: { author: true } })
-    const done = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "D" }] }, include: { author: true } })
+    const todo = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "To Do" }] }, include: { author: { select: { name: true }}, comments: { select: { id: true }} } })
+    const inProg = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "In Progress" }] }, include: { author: { select: { name: true }}, comments: { select: { id: true }} } })
+    const inRev = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "In Review" }] }, include: { author: { select: { name: true }}, comments: { select: { id: true }} } })
+    const done = await prisma.bug.findMany({ where: { AND: [{ project: { id: id } }, { progress: "Done" }] }, include: { author: { select: { name: true }}, comments: { select: { id: true }} } })
 
     return Response.json({ project, todo, inProg, inRev, done })
   } catch (error) {

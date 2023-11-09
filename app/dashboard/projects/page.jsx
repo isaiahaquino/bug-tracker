@@ -6,13 +6,6 @@ import Search from "../../components/Search";
 import ProjectPreview from "../../components/ProjectPreview";
 import { PlusIcon } from "@heroicons/react/24/solid"
 
-const sampleProject = {
-  title: "tanaman.id",
-  desc: "A Full Stack MERN Social Media App with integrated Authorization, Authentification, Pagination, and Search functionalities.",
-  createdAt: new Date(),
-  bugs: [{}, {}, {}]
-}
-
 export default function Projects() {
   const [showForm, setShowForm] = useState(false)
   const [formData, setFormData] = useState({ title: "", desc: "" })
