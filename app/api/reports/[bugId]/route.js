@@ -2,7 +2,7 @@ import prisma from "../../../../prisma/client"
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route"
 
-export async function GET(res, { params }) {
+export async function GET(req, { params }) {
   const id = params.bugId
   try {
     const bug = await prisma.bug.findUnique({ 
@@ -44,6 +44,35 @@ export async function POST(req, res) {
         bug: {
           connect: { id: bug }
         },
+      }
+    })
+
+    return Response.json(result)
+  } catch (error) {
+    return new Response(error.message, { status: 500 })
+  }
+}
+
+export async function PUT(req, { params }) {
+  try {
+    const id = params.bugId
+    const { progress, desc } = await req.json()
+    
+    const result = await prisma.bug.update({
+      where: { id },
+      data: { progress, desc },
+      include: { 
+        author: {
+          select: { name: true }
+        },
+        project: {
+          select: { title: true }
+        },
+        comments: {
+          include: {
+            author: { select: { name: true } }
+          }
+        }
       }
     })
 
