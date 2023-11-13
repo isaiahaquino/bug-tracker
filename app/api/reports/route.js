@@ -2,6 +2,37 @@ import prisma from "../../../prisma/client";
 
 export async function GET(req, res) {
   try {
+    if (req.nextUrl.searchParams.get("prev")) {
+      switch (req.nextUrl.searchParams.get("prev")) {
+        case "todo":
+          const todoResult = await prisma.bug.findMany({
+            where: {
+              progress: "To Do"
+            },
+            include: {
+              project: {
+                select: { title: true }
+              }
+            },
+            orderBy: { createdAt: "desc" }
+          })
+
+          return Response.json(todoResult)
+        case "inProg":
+          const inProgResult = await prisma.bug.findMany({
+            where: {
+              progress: "In Progress"
+            },
+            include: {
+              project: {
+                select: { title: true }
+              }
+            },
+            orderBy: { createdAt: "desc" }
+          })
+          return Response.json(inProgResult)
+      }
+    }
     if (!req.nextUrl.searchParams.get("skip")) {
       const result = await prisma.bug.findMany({
         include: {

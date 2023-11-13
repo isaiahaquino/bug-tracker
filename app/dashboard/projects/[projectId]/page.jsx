@@ -38,7 +38,7 @@ export default function Projects () {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
+    console.log("bug Form", formData)
     
     const postBug = async () => {
       const res = await fetch(`/api/projects/${projectId}`, {
@@ -49,7 +49,7 @@ export default function Projects () {
     }
 
     postBug()
-      .then(data => console.log("Posted bug: ", data))
+      .then(res => console.log("posted bug: ", res))
     changeMode()
   }
 

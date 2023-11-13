@@ -30,8 +30,10 @@ export async function POST(req, { params }) {
     const session = await getServerSession(authOptions)
     if (!session) return new Response("Unauthorized", { status: 401 })
 
-    if (!(progress === "T" || progress === "P" || progress === "R" || progress === "D")) return new Response({ status: 400 })
+    // if (!(progress === "T" || progress === "P" || progress === "R" || progress === "D")) return new Response({ status: 400 })
     if (Number(severity) < 1 || Number(severity) > 3 ) return new Response({ status: 400 })
+
+    console.log("testasdf")
 
     const postBug = await prisma.bug.create({
       data: {
@@ -48,6 +50,8 @@ export async function POST(req, { params }) {
         },
       }
     })
+
+    console.log(postBug)
 
     return Response.json(postBug)
   } catch (error) {

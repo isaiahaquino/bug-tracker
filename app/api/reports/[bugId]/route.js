@@ -81,3 +81,18 @@ export async function PUT(req, { params }) {
     return new Response(error.message, { status: 500 })
   }
 }
+
+export async function DELETE(req, { params }) {
+  try {
+    const id = params.bugId
+
+    const result = await prisma.bug.delete({
+      where: { id }
+    })
+
+    return Response.json(result)
+  } catch (error) {
+    console.log(error)
+    return new Response(error.message, { status: 500 })
+  }
+}
