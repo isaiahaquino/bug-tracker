@@ -8,6 +8,7 @@ import { useParams } from "next/navigation"
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from "@heroicons/react/24/solid"
 import Ticket from '../../../components/Ticket'
+import Search from "../../../components/Search"
 
 export default function Projects () {
   const { data } = useSession()
@@ -16,8 +17,6 @@ export default function Projects () {
   const [mode, setMode] = useState(false)
   const [project, setProject] = useState(null)
 
-  if (!data || !projectId) return null
-
   useEffect(() => {
     setFormData({ ...formData, author: data.user.id, project: projectId})
     fetch(`/api/projects/${projectId}`)
@@ -25,7 +24,7 @@ export default function Projects () {
       .then(data => {
         setProject(data)
       })
-  }, [])
+  }, [data, projectId])
 
   const changeMode = () => {
     setMode(mode => !mode)
@@ -63,13 +62,7 @@ export default function Projects () {
           <p className="text-lg text-gray-500">Created on {moment(project?.project.createdAt).format('MMMM Do YYYY')}</p>
         </div>
 
-        <div className="flex items-center gap-6">
-          <div className="border-b-2 flex content-center py-4 text-gray-500 gap-3 items-center">
-            <MagnifyingGlassIcon className="h-4" />
-            <input type="text" id="search" name="Search" placeholder="Data, error, task etc .."></input>
-          </div>
-          <button className="bg-black text-white h-full w-28">Search</button>
-        </div>
+        <Search />
       </div>
 
       <div className="flex-1 flex gap-8 px-8 relative overflow-y-hidden">

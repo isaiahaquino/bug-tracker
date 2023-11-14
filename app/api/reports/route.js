@@ -2,6 +2,9 @@ import prisma from "../../../prisma/client";
 
 export async function GET(req, res) {
   try {
+    const search = req.nextUrl.searchParams.get("search") || ""
+
+    // dashbaord preview
     if (req.nextUrl.searchParams.get("prev")) {
       switch (req.nextUrl.searchParams.get("prev")) {
         case "todo":
@@ -33,6 +36,10 @@ export async function GET(req, res) {
           return Response.json(inProgResult)
       }
     }
+
+
+
+    // Get total
     if (!req.nextUrl.searchParams.get("skip")) {
       const result = await prisma.bug.findMany({
         include: {

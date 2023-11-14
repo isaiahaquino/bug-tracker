@@ -45,10 +45,7 @@ export default function ProjectPreview(props) {
         <p className="text-gray-500">{project.desc}</p>
       </div>
       <div className="flex flex-col">
-        <EllipsisHorizontalIcon className="h-8" />
-        <div className="flex">        
-        
-        </div>
+        {/* <EllipsisHorizontalIcon className="h-8" /> */}
       </div>
     </div>
   )

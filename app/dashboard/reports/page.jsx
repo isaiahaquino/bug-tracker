@@ -8,6 +8,7 @@ import Search from "../../components/Search"
 import Severity from "../../components/Severity"
 import Tag from "../../components/Tag"
 import Pagination from "../../components/Pagination"
+import { useSearchParams } from "next/navigation"
 
 export function BugPreview({bug}) {
   return (
@@ -26,19 +27,24 @@ export function BugPreview({bug}) {
 }
 
 export default function Reports () {
+  const searchParams = useSearchParams()
   const [totalReports, setTotalReports] = useState([])
   const [reports, setReports] = useState([])
   const [rows, setRows] = useState(10)
   const [currIdx, setCurrIdx] = useState(1)
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
-    fetch("/api/reports")
+    const searchQuery = searchParams.get("search")
+    if (searchQuery) { setSearch(`search=${searchQuery}`)}
+
+    fetch(`/api/reports?${search}`)
       .then(res => res.json())
       .then(data => setTotalReports(data))
 
     getReports()
       .then(data => setReports(data))
-  }, [])
+  }, [search])
 
   useEffect(() => {
     getReports()
@@ -50,7 +56,7 @@ export default function Reports () {
   }
 
   const getReports = async () => {
-    const result = await fetch(`/api/reports?skip=${currIdx-1}&take=${rows}`)
+    const result = await fetch(`/api/reports?${search}&skip=${currIdx-1}&take=${rows}`)
     return result.json()
   }
 
@@ -63,7 +69,6 @@ export default function Reports () {
   }
 
   if (!reports) return null
-
 
   return (
     <div className="flex flex-col flex-1 px-10 max-h-screen overflow-y-scroll">

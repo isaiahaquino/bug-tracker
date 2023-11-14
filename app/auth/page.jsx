@@ -81,7 +81,7 @@ export default function Auth() {
         { newUser ? 
           <p className="self-center">Already have an account? <a className="text-teal-600" onClick={changeMode}>Log in</a></p>
           :
-          <p className="self-center">Don't have an account? <a className="text-teal-600" onClick={changeMode}>Sign up</a></p>
+          <p className="self-center">Don&apos;t have an account? <a className="text-teal-600" onClick={changeMode}>Sign up</a></p>
         }
       </form>
     </div>

@@ -2,6 +2,9 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 
 export default function Search() {
+
+  return null
+
   return (
     <div className="flex items-center gap-6 h-full">
       <div className="border-b-2 flex content-center py-4 text-gray-500 gap-3 items-center">
