@@ -116,22 +116,19 @@ export default function BugPage() {
   if (!bug) return null
 
   return (
-    <div className="flex-1 flex max-h-screen">
-      <form className="mx-14 my-16 flex flex-col gap-4 flex-1">
-        <div className="flex justify-between mb-4 relative">
-          <button onClick={handleBack} className="bg-slate-100 px-4 py-2"><ArrowLeftIcon className="h-6"/></button>
-          <div className="flex gap-4">
-            { editMode && (
-              <button onClick={handleDelete} className="p-4 rounded-full bg-red-400">
-                <TrashIcon className="h-5"/>
-              </button>
-            )}
-            { bug.authorId === data.user.id && 
-              <button onClick={handleEdit} className="p-4 rounded-full bg-teal-200">
-                { editMode ? <XMarkIcon className="h-5"/> : <PencilIcon className="h-5"/> }
-              </button>
-            }
-          </div>
+    <div className="flex md:flex-row flex-col h-full pb-10 gap-10">
+      <form className="flex flex-col gap-4 flex-1 relative">
+        <div className="flex gap-4 absolute right-0">
+          { editMode && (
+            <button onClick={handleDelete} className="p-4 rounded-full bg-red-400">
+              <TrashIcon className="h-5"/>
+            </button>
+          )}
+          { bug.authorId === data.user.id && 
+            <button onClick={handleEdit} className="p-4 rounded-full bg-teal-200">
+              { editMode ? <XMarkIcon className="h-5"/> : <PencilIcon className="h-5"/> }
+            </button>
+          }
         </div>
         <h2 className="text-xl font-medium text-gray-400">{bug.project.title}</h2>
         <h1 className="text-4xl font-semibold mb-4">{bug.title}</h1>
@@ -166,14 +163,12 @@ export default function BugPage() {
         )}
       </form>
 
-      <div className="flex-1 border-l-2 flex flex-col items-stretch justify-between p-8">
-        <div>
-          <h1 className="bg-white text-3xl py-10 font-semibold text-left rounded-lg">Comments</h1>
-          <div className="flex flex-col gap-6 overflow-y-scroll">
-            { bug.comments.map(comment => { return <Comment comment={comment} user={data.user.id} key={comment.id}/> }) }
-          </div>
+      <div className="flex-1 border-2 rounded-xl flex flex-col items-stretch justify-between p-8">
+        <h1 className="bg-white text-3xl pb-10 font-semibold text-left rounded-lg">Comments</h1>
+        <div className="flex-1 overflow-y-scroll flex flex-col gap-6 max-h-fit">
+          { bug.comments.map(comment => { return <Comment comment={comment} user={data.user.id} key={comment.id}/> }) }
         </div>
-        <form className="self-center flex w-full gap-4 bg-inherit" onSubmit={handleSubmit}>
+        <form className="self-center flex w-full pt-4 gap-4 bg-inherit" onSubmit={handleSubmit}>
           <input className="w-full px-4 py-3 border-b-2 bg-inherit" type="text" name="content" id="content" placeholder="type here..." value={formData.content} onChange={handleCommentChange}/>
           <button className="bg-black py-2 px-3 text-white" type="submit"><PaperAirplaneIcon className="h-6"/></button>
         </form>

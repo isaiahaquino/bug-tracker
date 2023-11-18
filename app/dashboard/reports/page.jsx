@@ -12,12 +12,12 @@ import { useSearchParams } from "next/navigation"
 
 export function BugPreview({bug}) {
   return (
-    <Link href={`/dashboard/reports/${bug.id}`} className="grid grid-cols-8 w-full  bg-white items-center justify-items-center p-2 border-b-2 border-slate-50">
-      <div className="justify-self-start flex flex-col">
-        <h1 className="font-bold">{bug.title}</h1>
-        <p className="text-sm text-gray-500">{bug.project.title}</p>
+    <Link href={`/dashboard/reports/${bug.id}`} className="text-sm grid grid-cols-10 w-full items-center justify-items-center p-2 bg-white">
+      <div className="justify-self-start pl-4 col-span-2 flex flex-col">
+        <h1 className="font-semibold">{bug.title}</h1>
+        <p className="text-gray-500">{bug.project.title}</p>
       </div>
-      <p className="col-span-3 justify-self-start">{bug.desc}</p>
+      <p className="col-span-4 justify-self-start">{bug.desc}</p>
       <p>{moment(bug.createdAt).format("MM/DD/YYYY")}</p>
       <Severity severity={bug.severity}/>
       <p>{bug.progress}</p>
@@ -71,26 +71,28 @@ export default function Reports () {
   if (!reports) return null
 
   return (
-    <div className="flex flex-col flex-1 px-10 max-h-screen overflow-y-scroll">
-      <div className="pt-20 pb-10 flex justify-between items-end">
-        <h1 className="text-4xl font-medium">Reports</h1>
+    <div className="flex flex-col flex-1">
+      <div className="pb-10 flex justify-between items-end">
+        <h1 className="text-3xl font-medium">Reports</h1>
         <Search />
       </div>
 
-      <div className="bg-slate-50 rounded-md p-2 mb-4">
-        <div className="grid grid-cols-8 w-full text-center bg-white font-medium text-xl p-2 border-b-8 border-slate-50">
-          <h2>TITLE</h2>
-          <h2 className="col-span-3">DESCRIPTION</h2>
-          <h2>CREATED</h2>
-          <h2>SEVERITY</h2>
-          <h2>PROGRESS</h2>
-          <h2>CATEGORY</h2>
+      <div className="rounded-xl mb-4 border-2 bg-slate-100 border-slate-100">
+        <div className="grid grid-cols-10 w-full text-center p-2 ">
+          <h2 className="col-span-2">Title</h2>
+          <h2 className="col-span-4">Description</h2>
+          <h2>Created</h2>
+          <h2>Severity</h2>
+          <h2>Progress</h2>
+          <h2>Category</h2>
         </div>
-        {
-          reports.map(report => {
-            return <BugPreview bug={report} key={report.id}/>
-          })
-        }
+        <div className="divide-y">
+          {
+            reports.map(report => {
+              return <BugPreview bug={report} key={report.id}/>
+            })
+          }          
+        </div>
       </div>
 
       <div className="self-end mr-4 mb-10">

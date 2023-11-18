@@ -22,7 +22,7 @@ export async function GET(req, res) {
         }
       },
       orderBy: { createdAt: "desc" },
-      take: 7,
+      take: 5,
     })
 
     return Response.json(result)

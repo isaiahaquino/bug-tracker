@@ -17,36 +17,36 @@ export default function ProjectPreview(props) {
   getBugCount()
 
   return (
-    <div className="bg-white rounded-md p-4 flex justify-between">
+    <div className="rounded-md border-2 p-4 md:p-6 flex justify-between">
       <div className="flex flex-col gap-4">
         <div className="flex gap-10">
-          <Link className="text-xl font-medium" href={`/dashboard/projects/${project.id}`}>{project.title}</Link>
-          <div className="flex gap-4">
+          <Link className="text-2xl font-medium" href={`/dashboard/projects/${project.id}`}>{project.title}</Link>
+          <div className="flex gap-2 md:gap-4 flex-col md:flex-row">
             { minor !== 0 && 
-              <div className="flex items-center gap-2 bg-yellow-400 rounded-md py-1 px-2 text-white">
+              <div className="flex items-center gap-2 bg-yellow-400 rounded-md py-1 px-2 text-white h-fit">
                 <BugAntIcon className="h-5"/>
                 <p>{minor}</p>
               </div>
             }
             { major !== 0 && 
-              <div className="flex items-center gap-2 bg-orange-400 rounded-md py-1 px-2 text-white">
+              <div className="flex items-center gap-2 bg-orange-400 rounded-md py-1 px-2 text-white h-fit">
                 <BugAntIcon className="h-5"/>
                 <p>{major}</p>
               </div>
             }
             { critical !== 0 && 
-              <div className="flex items-center gap-2 bg-red-400 rounded-md py-1 px-2 text-white">
+              <div className="flex items-center gap-2 bg-red-400 rounded-md py-1 px-2 text-white h-fit">
                 <BugAntIcon className="h-5"/>
                 <p>{critical}</p>
               </div>
             }
           </div>
         </div>
-        <p className="text-gray-500">{project.desc}</p>
+        <p className="text-slate-600">{project.desc}</p>
       </div>
-      <div className="flex flex-col">
-        {/* <EllipsisHorizontalIcon className="h-8" /> */}
-      </div>
+      {/* <div className="flex flex-col">
+        <EllipsisHorizontalIcon className="h-8" />
+      </div> */}
     </div>
   )
 }

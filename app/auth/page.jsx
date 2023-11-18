@@ -16,7 +16,8 @@ export default function Auth() {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value })
   }
 
-  const changeMode = () => {
+  const changeMode = (e) => {
+    e.preventDefault()
     setFormData({ name: "", email: "", password: ""})
     setNewUser(!newUser)
     setEmailExists(false)
@@ -57,8 +58,8 @@ export default function Auth() {
 
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center bg-slate-200">
-      <form className="bg-white px-20 py-20 rounded-md flex flex-col gap-1 w-[500px]" onSubmit={handleSubmit}>
+    <div className="h-screen w-screen flex justify-center items-center bg-gradient-to-tr from-slate-200 to-teal-300">
+      <form className="bg-white shadow-xl px-20 py-20 rounded-xl flex flex-col gap-1 w-[500px]" onSubmit={handleSubmit}>
         <h1 className={`text-2xl font-medium ${newUser ? "" : "mb-6"}`}>{newUser ? "Sign up." : "Welcome back!"}</h1>
         { newUser && 
         <>
@@ -79,9 +80,9 @@ export default function Auth() {
         )}
         <button type="submit" className="bg-teal-600 text-white py-3 rounded-md my-4">{newUser ? "Create account" : "Sign In"}</button>
         { newUser ? 
-          <p className="self-center">Already have an account? <a className="text-teal-600" onClick={changeMode}>Log in</a></p>
+          <span className="flex gap-2 self-center"><p>Already have an account?</p><button className="text-teal-600" onClick={changeMode}>Log in</button></span>
           :
-          <p className="self-center">Don&apos;t have an account? <a className="text-teal-600" onClick={changeMode}>Sign up</a></p>
+          <span className="flex gap-2 self-center"><p className="self-center">Don&apos;t have an account?</p><button className="text-teal-600" onClick={changeMode}>Sign up</button></span>
         }
       </form>
     </div>
