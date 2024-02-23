@@ -27,7 +27,7 @@ export default function Projects () {
 
   const changeMode = () => {
     setMode(mode => !mode)
-    setFormData({ ...formData, title: "", desc: "", category: "", progress: "", severity: 1 })
+    setFormData({ ...formData, title: "", desc: "", category: "", progress: "", severity: 0 })
   }
 
   const handleChange = (e) => {
@@ -36,7 +36,7 @@ export default function Projects () {
   
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("bug Form", formData)
+    // console.log("bug Form", formData)
     
     const postBug = async () => {
       const res = await fetch(`/api/projects/${projectId}`, {
@@ -46,9 +46,11 @@ export default function Projects () {
       return res.json()
     }
 
-    postBug()
-      .then(res => console.log("posted bug: ", res))
-    changeMode()
+    if (formData.category !== "" && formData.progress !== "" && formData.severity !== 0) {
+      postBug()
+        .then(res => console.log("posted bug: ", res))
+      changeMode()
+    } else { console.log("error")}
   }
 
   if (!project) return null
@@ -104,67 +106,40 @@ export default function Projects () {
       </div>
 
         {mode ? (
-          <form className="flex flex-col px-10 pt-10 pb-20 w-screen h-screen md:w-[500px] absolute right-0 md:right-20 bottom-0 md:border-[1px] border-b-0 rounded-b-none rounded-md border-gray-500 shadow-2xl bg-white z-40" onSubmit={handleSubmit}>
+          <form className="flex flex-col px-10 pt-10 pb-20 w-screen h-screen md:h-fit md:w-[500px] absolute right-0 md:right-20 bottom-0 md:border-[1px] border-b-0 rounded-b-none rounded-md border-gray-500 shadow-2xl bg-white z-40" onSubmit={handleSubmit}>
             <h1 className="text-xl font-semibold mb-4">Create Bug Ticket</h1>
+            
             <label htmlFor="title" className="mb-2">Title:</label>
             <input className="p-2 border-[1px] border-gray-300 mb-6" type="text" id="title" name="title" value={formData.title} onChange={handleChange} required/>
+            
             <label htmlFor="desc" className="mb-2">Description:</label>
             <textarea className="p-2 border-[1px] border-gray-300 mb-6" id="desc" name="desc" rows={4} value={formData.desc} onChange={handleChange} required/>
-            <fieldset className="mb-6">
-              <legend className="mb-2">Category:</legend>
-              <div className="flex gap-8">
-                <p className="gap-1 flex">
-                  <input type="radio" name="category" id="category1" value="UXDesign" onClick={handleChange} required/>
-                  <label htmlFor="category1">UXDesign</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="category" id="category2" value="UIDesign" onClick={handleChange}/>
-                  <label htmlFor="category2">UIDesign</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="category" id="category3" value="Developing" onClick={handleChange}/>
-                  <label htmlFor="category3">Developing</label>
-                </p>
-              </div>
+
+            <fieldset className="flex justify-between">
+              <legend className="mb-2">Details:</legend>
+              <select className={`p-1 border-[1px] rounded-sm w-[8rem] ${formData.category == "" && "outline outline-1 outline-red-400"}`} name="category" id="category1" onChange={handleChange} defaultValue="default" required>
+                <option value="default" disabled hidden>Category:</option>
+                <option value="UXDesign">UX Design</option>
+                <option value="UIDesign">UI Design</option>
+                <option value="Developing">Developing</option>
+              </select>
+
+              <select className={`p-1 border-[1px] rounded-sm w-[8rem] ${formData.progress == "" && "outline outline-1 outline-red-400"}`} name="progress" id="progress1" onChange={handleChange} defaultValue={0} required>
+                <option value={0} disabled hidden>Progress:</option>
+                <option value="To Do">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="In Review">In Review</option>
+                <option value="Done">Done</option>
+              </select>
+
+              <select className={`p-1 border-[1px] rounded-sm w-[8rem] ${formData.severity == 0 && "outline outline-1 outline-red-400"}`} name="severity" id="severity1" onChange={handleChange} defaultValue={0} required>
+                <option value={0} disabled hidden>Severity:</option>
+                <option value={1}>Minor</option>
+                <option value={2}>Major</option>
+                <option value={3}>Critical</option>
+              </select>
             </fieldset>
-            <fieldset className="mb-6">
-              <legend className="mb-2">Progress:</legend>
-              <div className="flex gap-8">
-                <p className="gap-1 flex">
-                  <input type="radio" name="progress" id="progress1" value="To Do" onClick={handleChange} required/>
-                  <label htmlFor="progress1">To Do</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="progress" id="progress2" value="In Progress" onClick={handleChange}/>
-                  <label htmlFor="progress2">In Progress</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="progress" id="progress3" value="In Review" onClick={handleChange}/>
-                  <label htmlFor="progress3">In Review</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="progress" id="progress4" value="Done" onClick={handleChange}/>
-                  <label htmlFor="progress4">Done</label>
-                </p>
-              </div>
-            </fieldset>
-            <fieldset className="mb-6">
-              <legend className="mb-2">Severity:</legend>
-              <div className="flex gap-8">
-                <p className="gap-1 flex">
-                  <input type="radio" name="severity" id="severity1" value={1} onClick={handleChange} required/>
-                  <label htmlFor="severity1">Minor</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="severity" id="severity2" value={2} onClick={handleChange}/>
-                  <label htmlFor="severity2">Major</label>
-                </p>
-                <p className="gap-1 flex">
-                  <input type="radio" name="severity" id="severity3" value={3} onClick={handleChange}/>
-                  <label htmlFor="severity3">Critical</label>
-                </p>
-              </div>
-            </fieldset>
+    
             <div className="mt-8 flex self-end gap-4">
               <button className="px-6 py-2 border-[1px] rounded-sm" type="cancel" onClick={changeMode}>Cancel</button>
               <button className="px-6 py-2 bg-black text-white rounded-sm" type="submit">Submit</button>

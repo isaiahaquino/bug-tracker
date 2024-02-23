@@ -14,7 +14,7 @@ export default function Home() {
     } else {
       router.push("/dashboard")
     }
-  }, [data])
+  }, [data,router])
 
   return (
     <main>

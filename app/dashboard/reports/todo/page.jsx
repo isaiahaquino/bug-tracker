@@ -1,32 +1,26 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams } from "next/navigation"
 
-import BugPreview from "../../components/BugPreview"
-import Search from "../../components/Search"
-import Pagination from "../../components/Pagination"
+import BugPreview from "../../../components/BugPreview"
+import Search from "../../../components/Search"
+import Pagination from "../../../components/Pagination"
 
 export default function Reports () {
-  const searchParams = useSearchParams()
   const [totalReports, setTotalReports] = useState([])
   const [reports, setReports] = useState([])
   const [rows, setRows] = useState(10)
   const [currIdx, setCurrIdx] = useState(1)
-  const [search, setSearch] = useState("")
 
   useEffect(() => {
-    const searchQuery = searchParams.get("search")
-    if (searchQuery) { setSearch(`search=${searchQuery}&`)}
-
-    fetch(`/api/reports?${search}`)
+    fetch(`/api/reports`)
       .then(res => res.json())
       .then(data => setTotalReports(data))
 
-    fetch(`/api/reports?${search}skip=${currIdx-1}&take=${rows}`)
+    fetch(`/api/reports?skip=${currIdx-1}&take=${rows}`)
       .then(res => res.json())
       .then(data => setReports(data))
-  }, [search, searchParams, currIdx, rows])
+  }, [currIdx, rows])
 
   const changeRows = (e) => {
     setRows(e.target.value)
@@ -42,12 +36,10 @@ export default function Reports () {
 
   if (!reports) return null
 
-  console.log(search)
-
   return (
     <div className="flex flex-col flex-1">
       <div className="pb-10 flex justify-between items-end">
-        <h1 className="text-3xl font-medium">Reports</h1>
+        <h1 className="text-3xl font-medium">To Do</h1>
         <Search />
       </div>
 

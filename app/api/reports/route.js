@@ -36,6 +36,9 @@ export async function GET(req, res) {
     }
 
     // Get total
+
+    // use primsa.bug.count() to get the count
+    
     if (!req.nextUrl.searchParams.get("skip")) {
       const result = await prisma.bug.findMany({
         include: {

@@ -43,6 +43,7 @@ export default function Auth() {
     const customSignin = async () => {
       const resp =  await signIn("credentials", { email: formData.email, password: formData.password, redirect: false })
       if (resp.error) {
+        console.log(resp.error)
         setInvalidLogin(true)
       } else {
         router.push("/dashboard")
@@ -65,16 +66,16 @@ export default function Auth() {
         <>
           <p className="text-gray-400 mb-6">Enter some of your information to get access to Bug Splat.</p>
           <label htmlFor="name">Your name</label>
-          <input type="text" name="name" id="name" onChange={handleChange} value={formData.name} className="px-2 py-2 border-2 border-gray-200 rounded-md mb-2"/>
+          <input type="text" name="name" id="name" onChange={handleChange} value={formData.name} className="px-2 py-2 border-2 border-gray-200 rounded-md mb-2" required/>
         </>
         }
         <div className="flex gap-4">
           <label htmlFor="email">Your Email</label>
           { emailExists && <p className="text-red-700">Email already exists!</p> } 
         </div>
-        <input type="email" name="email" id="email" onChange={handleChange} value={formData.email} className="px-2 py-2 border-2 border-gray-200 rounded-md mb-2"/>
+        <input type="email" name="email" id="email" onChange={handleChange} value={formData.email} className="px-2 py-2 border-2 border-gray-200 rounded-md mb-2" required/>
         <label htmlFor="password">Password</label>
-        <input type={`${newUser ? "text" : "password"}`} name="password" id="password" onChange={handleChange} value={formData.password} className="px-2 py-2 border-2 border-gray-200 rounded-md"/>
+        <input type={`${newUser ? "text" : "password"}`} name="password" id="password" onChange={handleChange} value={formData.password} className="px-2 py-2 border-2 border-gray-200 rounded-md" required/>
         {invalidLogin && (
           <p className="text-red-700 self-center mt-3">Invalid login credentials.</p>
         )}
